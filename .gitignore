@@ -1,8 +1,6 @@
 
-DashboardManager/.vs/DashboardManager/DesignTimeBuild/
+DashboardManager/.vs/
 
-DashboardManager/.vs/DashboardManager/v16/
-
-DashboardManager/bin/Debug/netcoreapp3.1/
+DashboardManager/bin/
 
 DashboardManager/obj/
