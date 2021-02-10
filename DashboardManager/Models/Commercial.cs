@@ -6,19 +6,42 @@ namespace DashboardManager.Models
 {
     public class Commercial
     {
+        // ID
         public int Id { get; set; }
+
+        // NOM
+        [Required(ErrorMessage = "Champ obligatoire")]
         [Display(Name = "Nom")]
         public string Name { get; set; }
+
+        // ZONE
+        [Required(ErrorMessage = "Champ obligatoire")]
         [Display(Name = "Zone de chalandise")]
         public string CatchmentArea { get; set; }
+
+        // CLIENTS
+        //[Required]
+        [Display(Name = "Nb clients")]
         public List<Client> Clients { get; set; }
-        [Display(Name = "Nombre de devis")]
+
+        // DEVIS
+        [Required(ErrorMessage = "Champ obligatoire")]
+        [Display(Name = "Nb devis")]
         public int NbQuotes { get; set; }
-        [Display(Name = "Nombre de contrats")]
+
+        // CONTRATS
+        [Required(ErrorMessage = "Champ obligatoire")]
+        [Display(Name = "Nb contrats")]
         public int NbContracts { get; set; }
-        [Display(Name = "Date d'arrivée dans l'entreprise")]
+
+        // DATE
+        [Required(ErrorMessage = "Champ obligatoire")]
+        [Display(Name = "Arrivée dans l'entreprise")]
         [DataType(DataType.Date)]
         public DateTime CreationDate { get; set; }
+
+        // DEPARTEMENT
+        [Required(ErrorMessage = "Champ obligatoire")]
         public Departement Departement { get; set; }
     }
 }

@@ -20,7 +20,9 @@ namespace DashboardManager.Pages.Commercials
             _context = context;
         }
 
-        public IList<Commercial> Commercial { get;set; }
+        public IList<Commercial> Commercial { get; set; }
+        public IList<Departement> Departements { get; set; }
+        public IList<Client> Clients { get; set; }
 
         [BindProperty(SupportsGet = true)]
         public string SearchString { get; set; }
@@ -28,11 +30,25 @@ namespace DashboardManager.Pages.Commercials
 
         public async Task OnGetAsync()
         {
+            IQueryable<Departement> departementQuery = from m in _context.Departement orderby m.Name select m;
+            Departements = await departementQuery.Distinct().ToListAsync();
+
+            IQueryable<Client> clientQuery = from c in _context.Client select c;
+            Clients = await clientQuery.ToListAsync();
+
             // Utilisation de LINQ pour faire notre requête
-            var commercials = from c in _context.Commercial select c;
+            IQueryable<Commercial> commercials = 
+                from c in _context.Commercial
+                select c;
+
             if (!string.IsNullOrEmpty(SearchString))
             {
-                commercials = commercials.Where(s => s.Name.Contains(SearchString));
+                commercials = commercials
+                    .Where(
+                        s => s.Name.Contains(SearchString) 
+                        || s.Departement.Name.Contains(SearchString)
+                        || s.Departement.Code.ToString().Contains(SearchString)
+                    );
             }
             Commercial = await commercials.ToListAsync();
         }

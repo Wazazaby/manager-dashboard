@@ -5,17 +5,17 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Commerciaux</h1>
 
 <p>
-    <a asp-page="Create">Create New</a>
+    <a class="btn btn-success" asp-page="Create">Ajouter <i class="fas fa-plus"></i></a>
 </p>
 
 <form>
     <div class="input-group mb-3">
-        <input type="text" asp-for="SearchString" class="form-control" placeholder="Filtre par nom" aria-label="Recipient's username" aria-describedby="basic-addon2" />
+        <input type="text" asp-for="SearchString" class="form-control" aria-label="Recipient's username" aria-describedby="basic-addon2" />
         <div class="input-group-append">
-            <input class="btn btn-outline-secondary" type="submit" asp-for="SearchString" value="Rechercher" />
+            <input class="btn btn-outline-secondary" type="submit" value="Rechercher" />
         </div>
     </div>
 </form>
@@ -38,34 +38,46 @@
             <th>
                 @Html.DisplayNameFor(model => model.Commercial[0].CreationDate)
             </th>
-            <th></th>
+            <th>
+                @Html.DisplayNameFor(model => model.Commercial[0].Departement)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Commercial[0].Clients)
+            </th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model.Commercial)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CatchmentArea)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NbQuotes)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NbContracts)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CreationDate)
-                </td>
-                <td>
-                    <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-                </td>
-            </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CatchmentArea)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NbQuotes)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NbContracts)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreationDate)
+            </td>
+            <td>
+                @Html.Label(String.Format("{0} ({1})", item.Departement.Name, item.Departement.Code))
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Clients.Count)
+            </td>
+            <td>
+                <a class="btn btn-primary" asp-page="./Edit" asp-route-id="@item.Id"><i class="far fa-edit"></i></a>
+                <a class="btn btn-success" asp-page="./Details" asp-route-id="@item.Id"><i class="fas fa-info"></i></a>
+                <a class="btn btn-danger" asp-page="./Delete" asp-route-id="@item.Id"><i class="far fa-trash-alt"></i></a>
+            </td>
+        </tr>
         }
     </tbody>
 </table>

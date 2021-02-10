@@ -2,10 +2,10 @@
 @model DashboardManager.Pages.Commercials.CreateModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Créer";
 }
 
-<h1>Create</h1>
+<h1>@ViewData["Title"]</h1>
 
 <h4>Commercial</h4>
 <hr />
@@ -25,12 +25,12 @@
             </div>
             <div class="form-group">
                 <label asp-for="Commercial.NbQuotes" class="control-label"></label>
-                <input asp-for="Commercial.NbQuotes" class="form-control" />
+                <input asp-for="Commercial.NbQuotes" class="form-control" value="0" />
                 <span asp-validation-for="Commercial.NbQuotes" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Commercial.NbContracts" class="control-label"></label>
-                <input asp-for="Commercial.NbContracts" class="form-control" />
+                <input asp-for="Commercial.NbContracts" class="form-control" value="0" />
                 <span asp-validation-for="Commercial.NbContracts" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -39,14 +39,24 @@
                 <span asp-validation-for="Commercial.CreationDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <label asp-for="Commercial.Departement" class="control-label"></label>
+                <select asp-for="SelectedDepartementId" class="form-control" asp-items="Model.Departements">
+                    <option value="">Choisir</option>
+                </select>
+                <span asp-validation-for="Commercial.Departement" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                @*@Html.ListBox("Test", Model.Clients)*@
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Créer" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-page="Index">Back to List</a>
+    <a asp-page="Index">Retour</a>
 </div>
 
 @section Scripts {
