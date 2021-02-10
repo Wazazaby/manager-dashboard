@@ -1,4 +1,4 @@
-﻿@page
+﻿@page "{searchString?}"
 @model DashboardManager.Pages.Commercials.IndexModel
 
 @{
@@ -10,6 +10,16 @@
 <p>
     <a asp-page="Create">Create New</a>
 </p>
+
+<form>
+    <div class="input-group mb-3">
+        <input type="text" asp-for="SearchString" class="form-control" placeholder="Filtre par nom" aria-label="Recipient's username" aria-describedby="basic-addon2" />
+        <div class="input-group-append">
+            <input class="btn btn-outline-secondary" type="submit" asp-for="SearchString" value="Rechercher" />
+        </div>
+    </div>
+</form>
+
 <table class="table table-striped table-hover">
     <thead>
         <tr>
