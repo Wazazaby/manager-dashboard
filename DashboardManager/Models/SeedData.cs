@@ -12,9 +12,10 @@ namespace RazorPagesMovie.Models
     {
         public static void Initialize(IServiceProvider serviceProvider)
         {
-            using (var context = new DashboardManagerContext(
-                serviceProvider.GetRequiredService<
-                    DbContextOptions<DashboardManagerContext>>()))
+            using (
+                DashboardManagerContext context = 
+                    new DashboardManagerContext(serviceProvider.GetRequiredService<DbContextOptions<DashboardManagerContext>>())
+            )
             {
                 /*foreach (var entity in context.Departement)
                     context.Departement.Remove(entity);
@@ -27,10 +28,9 @@ namespace RazorPagesMovie.Models
                 context.Departement.RemoveRange(context.Departement);
                 context.Client.RemoveRange(context.Client);
                 context.SaveChanges();
-                // Look for any movies.
                 if (context.Departement.Any() || context.Client.Any() || context.Commercial.Any())
                 {
-                    return;   // DB has been seeded
+                    return;
                 }
 
                 Departement i = new Departement { Name = "Isère" ,Code = 38 };

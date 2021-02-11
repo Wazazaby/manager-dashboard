@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using DashboardManager.Data;
 using DashboardManager.Models;
+using System.Linq;
 
 namespace DashboardManager.Pages.Commercials
 {
@@ -20,6 +18,8 @@ namespace DashboardManager.Pages.Commercials
         }
 
         public Commercial Commercial { get; set; }
+        public List<Departement> Departements { get; set; }
+        public IList<Client> Clients { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -28,12 +28,17 @@ namespace DashboardManager.Pages.Commercials
                 return NotFound();
             }
 
+            IQueryable<Client> clientQuery = from c in _context.Client select c;
+            Clients = await clientQuery.ToListAsync();
             Commercial = await _context.Commercial.FirstOrDefaultAsync(m => m.Id == id);
+
+
 
             if (Commercial == null)
             {
                 return NotFound();
             }
+
             return Page();
         }
     }

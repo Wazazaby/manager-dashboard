@@ -35,6 +35,23 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Commercial.NbContracts)
         </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Commercial.Clients)
+        </dt>
+        <dd class="col-sm-10">
+            @if (Model.Commercial.Clients?.Count() > 0)
+            {
+                <ul class="list-group">
+                    @foreach (var x in Model.Commercial.Clients)
+                    {
+                        <li>@x.Name</li>
+                    }
+                </ul>
+            }
+        </dd>
+
+
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Commercial.CreationDate)
         </dt>
