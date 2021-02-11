@@ -9,34 +9,34 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">Home</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-page="/Commercials/Index">Commerciaux</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-page="/Clients/Index">Clients</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-page="/Departments/Index">Departements</a>
-                        </li>
-                    </ul>
+    <div class="container-fluid h-100">
+        <div class="row h-100">
+            <nav class="col-10 col-md-2 p-0 bg-dark naviBar">
+                <div class="navbar navbar-expand navbar-dark bg-dark flex-md-column flex-row align-items-start p-0">
+                    <a class="navbar-brand" asp-area="" asp-page="/Index">Madera</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse menuNav">
+                        <ul class="flex-md-column flex-row navbar-nav w-100 justify-content-between">
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="" asp-page="/Commercials/Index"><i class="fas fa-users"></i> Commerciaux</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="" asp-page="/Clients/Index"><i class="fas fa-user-tag"></i> Clients</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="" asp-page="/Departments/Index"><i class="fas fa-map-marker-alt"></i> Departements</a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+            </nav>
+            <main class="col mh-100 mt-5">
+                @RenderBody()
+            </main>
+        </div>
     </div>
 
     <footer class="border-top footer text-muted">
@@ -52,3 +52,35 @@
     @RenderSection("Scripts", required: false)
 </body>
 </html>
+
+
+<style>
+
+    .naviBar {
+        min-height: 100vh;
+    }
+
+    .navbar-brand{
+        margin: auto;
+        font-size: 55px;
+        font-weight: 500;
+    }
+
+    .nav-item{
+        padding: .5em;
+    }
+
+    li {
+        border-bottom: 1px solid grey;
+    }
+
+    .nav-link {
+        padding-left: 2em!important;
+    }
+
+    .menuNav{
+        min-width: 100%;
+    }
+
+
+</style>
