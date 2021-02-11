@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using DashboardManager.Data;
 using DashboardManager.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace DashboardManager.Pages.Clients
 {
@@ -14,6 +15,8 @@ namespace DashboardManager.Pages.Clients
     {
         private readonly DashboardManager.Data.DashboardManagerContext _context;
 
+        public string DepartementName { get; set; }
+        public List<SelectListItem> Departements { get; set; }
         public DetailsModel(DashboardManager.Data.DashboardManagerContext context)
         {
             _context = context;
@@ -23,6 +26,8 @@ namespace DashboardManager.Pages.Clients
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
+            PopulateDepartementSelect();
+
             if (id == null)
             {
                 return NotFound();
@@ -34,7 +39,28 @@ namespace DashboardManager.Pages.Clients
             {
                 return NotFound();
             }
+
+            DepartementName = GetNameDepartement();
+
             return Page();
+        }
+
+        public string GetNameDepartement()
+        {
+            return Client.Departement.Name;
+        }
+
+
+        // Récupére toute les départements
+        private void PopulateDepartementSelect()
+        {
+            IQueryable<Departement> departmentQuery = from d in _context.Departement select d;
+            List<SelectListItem> listDep = new List<SelectListItem>();
+            foreach (Departement dep in departmentQuery.ToList())
+            {
+                listDep.Add(new SelectListItem(dep.Name, dep.Id.ToString()));
+            }
+            Departements = listDep;
         }
     }
 }

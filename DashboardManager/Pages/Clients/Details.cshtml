@@ -23,9 +23,15 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Client.City)
         </dd>
+        <dt class="col-sm-2">
+            Departement
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DepartementName)
+        </dd>
     </dl>
 </div>
 <div>
-    <a asp-page="./Edit" asp-route-id="@Model.Client.Id">Edit</a> |
-    <a asp-page="./Index">Back to List</a>
+    <a class="btn btn-info" asp-page="./Edit" asp-route-id="@Model.Client.Id">Modifier</a>
+    <a class="btn btn-outline-primary" asp-page="./Index">retour</a>
 </div>

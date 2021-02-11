@@ -19,7 +19,7 @@ namespace DashboardManager.Pages.Commercials
 
         public Commercial Commercial { get; set; }
         public List<Departement> Departements { get; set; }
-        public IList<Client> Clients { get; set; }
+        public List<Client> Clients { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -30,16 +30,18 @@ namespace DashboardManager.Pages.Commercials
 
             IQueryable<Client> clientQuery = from c in _context.Client select c;
             Clients = await clientQuery.ToListAsync();
+
+            IQueryable<Departement> departementQuery = from m in _context.Departement orderby m.Name select m;
+            Departements = await departementQuery.Distinct().ToListAsync();
+
             Commercial = await _context.Commercial.FirstOrDefaultAsync(m => m.Id == id);
-
-
 
             if (Commercial == null)
             {
                 return NotFound();
             }
-
             return Page();
         }
+
     }
 }
