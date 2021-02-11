@@ -15,13 +15,41 @@ namespace DashboardManager.Pages.Clients
     {
         private readonly DashboardManager.Data.DashboardManagerContext _context;
 
+        // Liste des départements
+        public List<SelectListItem> Departements { get; set; }
+        [BindProperty]
+        public Client Client { get; set; }
+        [BindProperty]
+        public int? SelectedDepartementId { get; set; }
+
         public EditModel(DashboardManager.Data.DashboardManagerContext context)
         {
             _context = context;
         }
 
-        [BindProperty]
-        public Client Client { get; set; }
+
+        // Récupére toute les départements
+        private void PopulateDepartementSelect()
+        {
+            IQueryable<Departement> departmentQuery = from d in _context.Departement select d;
+            List<SelectListItem> listDep = new List<SelectListItem>();
+            foreach (Departement dep in departmentQuery.ToList())
+            {
+                listDep.Add(new SelectListItem(dep.Name, dep.Id.ToString()));
+            }
+            Departements = listDep;
+        }
+
+        /**
+         * Séléctionner le departement par defaut du client
+         * @param id: id du departement
+         * @return id departement
+         */
+        private int SelectDepartementByClient(int id)
+        {
+            SelectedDepartementId = id;
+            return (int)SelectedDepartementId;
+        }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -30,7 +58,9 @@ namespace DashboardManager.Pages.Clients
                 return NotFound();
             }
 
+            PopulateDepartementSelect();
             Client = await _context.Client.FirstOrDefaultAsync(m => m.Id == id);
+            SelectDepartementByClient(Client.Departement.Id);
 
             if (Client == null)
             {
@@ -39,11 +69,22 @@ namespace DashboardManager.Pages.Clients
             return Page();
         }
 
+        private async Task<bool> MapSelectedDepartementToClient()
+        {
+            // Récupération de l'objet du département correspondant à notre id
+            IQueryable<Departement> departmentQuery =
+                from d in _context.Departement
+                where d.Id == SelectedDepartementId
+                select d;
+            Client.Departement = await departmentQuery.FirstOrDefaultAsync();
+            return true;
+        }
+
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid && SelectedDepartementId == null)
             {
                 return Page();
             }
@@ -52,6 +93,7 @@ namespace DashboardManager.Pages.Clients
 
             try
             {
+                await MapSelectedDepartementToClient();
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)

@@ -19,11 +19,17 @@ namespace DashboardManager.Pages.Clients
             _context = context;
         }
 
-        public IList<Client> Client { get;set; }
+        public IList<Client> Client { get; set; }
+        public IList<Departement> Departements { get; set; }
+
 
         public async Task OnGetAsync()
         {
+            IQueryable<Departement> departementQuery = from m in _context.Departement orderby m.Name select m;
+            Departements = await departementQuery.Distinct().ToListAsync();
+
             Client = await _context.Client.ToListAsync();
+
         }
     }
 }
