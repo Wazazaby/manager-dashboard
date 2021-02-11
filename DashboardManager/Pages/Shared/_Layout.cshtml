@@ -11,7 +11,7 @@
 <body>
     <div class="container-fluid h-100">
         <div class="row h-100">
-            <nav class="col-10 col-md-2 p-0 bg-dark naviBar">
+            <nav class="col-8 col-md-2 p-0 bg-dark naviBar">
                 <div class="navbar navbar-expand navbar-dark bg-dark flex-md-column flex-row align-items-start p-0">
                     <a class="navbar-brand" asp-area="" asp-page="/Index">Madera</a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -21,13 +21,22 @@
                     <div class="collapse navbar-collapse menuNav">
                         <ul class="flex-md-column flex-row navbar-nav w-100 justify-content-between">
                             <li class="nav-item">
-                                <a class="nav-link text-light" asp-area="" asp-page="/Commercials/Index"><i class="fas fa-users"></i> Commerciaux</a>
+                                <div class="row text-light p-0 m-0">
+                                    <i class="fas fa-users col-2 m-auto"></i>
+                                    <a class="nav-link col-10" asp-page="/Commercials/Index">Commerciaux</a>
+                                </div>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-light" asp-area="" asp-page="/Clients/Index"><i class="fas fa-user-tag"></i> Clients</a>
+                                <div class="row text-light p-0 m-0">
+                                    <i class="fas fa-user-tag col-2 m-auto"></i>
+                                    <a class="nav-link col-10" asp-page="/Clients/Index">Clients</a>
+                                </div>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-light" asp-area="" asp-page="/Departments/Index"><i class="fas fa-map-marker-alt"></i> Departements</a>
+                                <div class="row text-light p-0 m-0">
+                                    <i class="fas fa-map-marker-alt col-2 m-auto"></i>
+                                    <a class="nav-link col-10" asp-page="/Departments/Index">Departements</a>
+                                </div>
                             </li>
                         </ul>
                     </div>
@@ -58,6 +67,7 @@
 
     .naviBar {
         min-height: 100vh;
+        max-width: 16em;
     }
 
     .navbar-brand{
@@ -70,12 +80,12 @@
         padding: .5em;
     }
 
-    li {
-        border-bottom: 1px solid grey;
+    .nav-item:hover{
+        background: #4f5963;
     }
 
-    .nav-link {
-        padding-left: 2em!important;
+    li {
+        border-bottom: 1px solid grey;
     }
 
     .menuNav{

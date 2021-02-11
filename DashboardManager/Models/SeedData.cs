@@ -36,6 +36,16 @@ namespace RazorPagesMovie.Models
                 Departement i = new Departement { Name = "Isère" ,Code = 38 };
                 Departement s = new Departement { Name = "Savoie", Code = 73 };
                 Departement v = new Departement { Name = "Var", Code = 83 };
+                Departement c = new Departement { Name = "Creuse", Code = 23 };
+                Departement d = new Departement { Name = "Drôme", Code = 26 };
+                Departement h = new Departement { Name = "Hérault", Code = 34 };
+                Departement va = new Departement { Name = "Var", Code = 83 };
+                Departement l = new Departement { Name = "Lot", Code = 46 };
+                Departement m = new Departement { Name = "Marne ", Code = 51 };
+                Departement p = new Departement { Name = "Pyrénées-orientales", Code = 66 };
+                Departement pa = new Departement { Name = "Paris", Code = 75 };
+                Departement vi = new Departement { Name = "Vienne", Code = 86 };
+                Departement ma = new Departement { Name = "Mayotte", Code = 976 };
 
                 Client t = new Client { Name = "Teddy", Departement = i, City = "La Sure en Chartreuse" };
                 Client k = new Client { Name = "Kevin", Departement = v, City = "Vinay" };
@@ -52,7 +62,7 @@ namespace RazorPagesMovie.Models
                     NbQuotes = 6, 
                     CreationDate = DateTime.Now 
                 };
-                Commercial p = new Commercial
+                Commercial pat = new Commercial
                 {
                     Name = "Patrick",
                     Clients = list,
@@ -62,7 +72,7 @@ namespace RazorPagesMovie.Models
                     NbQuotes = 235,
                     CreationDate = DateTime.Now
                 };
-                Commercial c = new Commercial
+                Commercial ced = new Commercial
                 {
                     Name = "Cedric",
                     Clients = list,
@@ -72,9 +82,9 @@ namespace RazorPagesMovie.Models
                     NbQuotes = 65,
                     CreationDate = DateTime.Now
                 };
-                context.Departement.AddRange(i, s, v);
+                context.Departement.AddRange(i, s, v, c, d, h, va, l, m, p, pa, vi, ma);
                 context.Client.AddRange(t, k);
-                context.Commercial.AddRange(n, p, c);
+                context.Commercial.AddRange(n, pat, ced);
                 context.SaveChanges();
             }
         }

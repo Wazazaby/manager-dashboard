@@ -28,7 +28,9 @@ namespace DashboardManager.Pages.Clients
             IQueryable<Departement> departementQuery = from m in _context.Departement orderby m.Name select m;
             Departements = await departementQuery.Distinct().ToListAsync();
 
-            Client = await _context.Client.ToListAsync();
+            Client = await _context.Client
+                .OrderBy(d => d.Name)
+                .ToListAsync();
 
         }
     }

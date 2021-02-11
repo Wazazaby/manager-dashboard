@@ -43,7 +43,10 @@ namespace DashboardManager.Pages.Commercials
                         || s.Departement.Code.ToString().Contains(SearchString)
                     );
             }
-            Commercial = await commercials.ToListAsync();
+            Commercial = await commercials
+                .OrderBy(d => d.Name)
+                .ToListAsync();
+
         }
     }
 }

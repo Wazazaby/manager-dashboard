@@ -23,7 +23,9 @@ namespace DashboardManager.Pages.Departments
 
         public async Task OnGetAsync()
         {
-            Departement = await _context.Departement.ToListAsync();
+            Departement = await _context.Departement
+                .OrderBy(d => d.Name)
+                .ToListAsync();
         }
     }
 }
