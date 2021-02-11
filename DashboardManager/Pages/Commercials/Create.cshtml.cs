@@ -32,16 +32,11 @@ namespace DashboardManager.Pages.Commercials
             }
             Departements = listDep;
         }
-        public List<SelectListItem> Clients { get; set; }
+        public SelectList Clients { get; set; }
         private void PopulateClientSelect()
         {
             IQueryable<Client> clientQuery = from c in _context.Client select c;
-            List<SelectListItem> listItems = new List<SelectListItem>();
-            foreach (Client client in clientQuery.ToList())
-            {
-                listItems.Add(new SelectListItem(client.Name, client.Id.ToString()));
-            }
-            Clients = listItems;
+            Clients = new SelectList(clientQuery.ToList(), nameof(Client.Id), nameof(Client.Name));
         }
 
 
@@ -60,6 +55,8 @@ namespace DashboardManager.Pages.Commercials
         // Nullable dans le cas où l'utilisateur de remplit pas le champ
         [BindProperty]
         public int? SelectedDepartementId { get; set; }
+        [BindProperty]
+        public int[] SelectedClientsIds { get; set; }
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid && SelectedDepartementId == null)
@@ -69,6 +66,8 @@ namespace DashboardManager.Pages.Commercials
 
             // Ajout du département sélectionné au commercial
             await MapSelectedDepartementToCommercial();
+            // Ajout des clients sélectionnés au commercial
+            await MapSelectedClientsToCommercial();
             _context.Commercial.Add(Commercial);
             await _context.SaveChangesAsync();
 
@@ -83,6 +82,19 @@ namespace DashboardManager.Pages.Commercials
                 where d.Id == SelectedDepartementId
                 select d;
             Commercial.Departement = await departmentQuery.FirstOrDefaultAsync();
+            return true;
+        }
+
+        private async Task<bool> MapSelectedClientsToCommercial()
+        {
+            if (SelectedClientsIds.Length > 0)
+            {
+                IQueryable<Client> clientQuery =
+                from client in _context.Client
+                where SelectedClientsIds.Contains(client.Id)
+                select client;
+                Commercial.Clients = await clientQuery.ToListAsync();
+            }
             return true;
         }
     }

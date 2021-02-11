@@ -46,8 +46,10 @@
                 <span asp-validation-for="Commercial.Departement" class="text-danger"></span>
             </div>
             <div class="form-group">
-                @*@Html.ListBox("Test", Model.Clients)*@
-            </div>
+                <label asp-for="Commercial.Clients" class="control-label">Clients</label>
+                <select asp-for="SelectedClientsIds" asp-items="Model.Clients"></select>
+                <span asp-validation-for="Commercial.Clients" class="text-danger"></span>
+            </div> 
             <div class="form-group">
                 <input type="submit" value="Créer" class="btn btn-primary" />
             </div>
