@@ -40,6 +40,18 @@
                 <span asp-validation-for="Commercial.CreationDate" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="Commercial.Departement" class="control-label"></label>
+                <select asp-for="SelectedDepartementId" class="form-control" asp-items="Model.Departements">
+                    <option value="">Choisir</option>
+                </select>
+                <span asp-validation-for="Commercial.Departement" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Commercial.Clients" class="control-label">Clients</label>
+                <select asp-for="SelectedClientsIds" asp-items="Model.Clients"></select>
+                <span asp-validation-for="Commercial.Clients" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>

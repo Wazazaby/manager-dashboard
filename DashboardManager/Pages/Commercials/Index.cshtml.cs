@@ -30,17 +30,10 @@ namespace DashboardManager.Pages.Commercials
 
         public async Task OnGetAsync()
         {
-            IQueryable<Departement> departementQuery = from m in _context.Departement orderby m.Name select m;
-            Departements = await departementQuery.Distinct().ToListAsync();
-
-            IQueryable<Client> clientQuery = from c in _context.Client select c;
-            Clients = await clientQuery.ToListAsync();
-
+            await _context.Departement.Distinct().ToListAsync();
+            await _context.Client.ToListAsync();
             // Utilisation de LINQ pour faire notre requête
-            IQueryable<Commercial> commercials = 
-                from c in _context.Commercial
-                select c;
-
+            IQueryable<Commercial> commercials = from c in _context.Commercial select c;
             if (!string.IsNullOrEmpty(SearchString))
             {
                 commercials = commercials

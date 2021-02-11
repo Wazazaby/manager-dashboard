@@ -37,20 +37,25 @@
         </dd>
 
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Commercial.Clients)
+            @Html.DisplayNameFor(model => model.Commercial.Departement)
         </dt>
         <dd class="col-sm-10">
-            @if (Model.Commercial.Clients?.Count() > 0)
-            {
-                <ul class="list-group">
-                    @foreach (var x in Model.Commercial.Clients)
-                    {
-                        <li>@x.Name</li>
-                    }
-                </ul>
-            }
+            @Html.DisplayFor(model => model.Commercial.Departement.Name) (@Html.DisplayFor(model => model.Commercial.Departement.Code))
         </dd>
 
+        @if (Model.Commercial.Clients?.Count() > 0)
+        {
+            <dt class="col-sm-2">Clients</dt>
+            <dd class="col-sm-10">
+                <p>Nb Clients : <span class="badge badge-primary badge-pill">@Model.Commercial.Clients.Count()</span></p>
+                <div class="list-group d-inline-block">
+                    @foreach (var x in Model.Commercial.Clients)
+                    {
+                        <a asp-page="/Clients/Details" asp-route-id="@x.Id" class="list-group-item list-group-item-action">@x.Name <i class="fas fa-link ml-2"></i></a>
+                    }
+                </div>
+            </dd>
+        }
 
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Commercial.CreationDate)
@@ -58,32 +63,9 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Commercial.CreationDate)
         </dd>
-
-        @*<dt class="col-sm-2">
-            Clients
-        </dt>
-        <dd class="col-sm-10">
-            @foreach (var x in Model.clientsArray)
-            {
-                <div class="card w-75">
-                    <div class="card-body">
-                        <h5 class="card-title">@x.Name</h5>
-                        <ul>
-                            <li class="card-text">
-                                Résidence: @x.City
-                            </li>
-                            <li class="card-text">
-                                Département: @x.Departement.Name @x.Departement.Code
-                            </li>
-                        </ul>
-                        <a asp-page="/Clients/Details" asp-route-id="@x.Id" class="btn btn-primary">Détail</a>
-                    </div>
-                </div>
-            }
-        </dd>*@
     </dl>
 </div>
 <div>
-    <a asp-page="./Edit" asp-route-id="@Model.Commercial.Id">Edit</a> |
-    <a asp-page="./Index">Back to List</a>
+    <a asp-page="./Edit" asp-route-id="@Model.Commercial.Id">Modifier</a> |
+    <a asp-page="./Index">Retour</a>
 </div>
