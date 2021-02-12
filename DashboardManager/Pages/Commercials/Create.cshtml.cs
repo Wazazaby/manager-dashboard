@@ -20,7 +20,7 @@ namespace DashboardManager.Pages.Commercials
             _context = context;
         }
 
-
+        // Liste contenant les options de départements
         public List<SelectListItem> Departements { get; set; }
         private void PopulateDepartementSelect()
         {
@@ -31,6 +31,8 @@ namespace DashboardManager.Pages.Commercials
             }
             Departements = listDep;
         }
+
+        // List contenant les options de clients
         public SelectList Clients { get; set; }
         private void PopulateClientSelect()
         {
@@ -50,7 +52,7 @@ namespace DashboardManager.Pages.Commercials
         [BindProperty]
         public Commercial Commercial { get; set; }
         // Binding du departement du commercial qui est traité à part
-        // Nullable dans le cas où l'utilisateur de remplit pas le champ
+        // Nullable dans le cas où l'utilisateur ne choisit pas de département
         [BindProperty]
         public int? SelectedDepartementId { get; set; }
         [BindProperty]
@@ -66,9 +68,11 @@ namespace DashboardManager.Pages.Commercials
             await MapSelectedDepartementToCommercial();
             // Ajout des clients sélectionnés au commercial
             await MapSelectedClientsToCommercial();
+            // Ajout du commercial au context et sauvegarde de manière asynchrone
             _context.Commercial.Add(Commercial);
             await _context.SaveChangesAsync();
 
+            // Redirection vers la liste des commerciaux
             return RedirectToPage("./Index");
         }
 

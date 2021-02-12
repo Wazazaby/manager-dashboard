@@ -23,6 +23,7 @@ namespace DashboardManager.Pages.Commercials
         public List<SelectListItem> Departements { get; set; }
         private void PopulateDepartementSelect()
         {
+            // Ajout des valeurs au select du département
             SelectedDepartementId = Commercial.Departement.Id;
             List<SelectListItem> listDep = new List<SelectListItem>();
             foreach (Departement dep in _context.Departement.ToList())
@@ -31,17 +32,29 @@ namespace DashboardManager.Pages.Commercials
             }
             Departements = listDep;
         }
+
         public SelectList Clients { get; set; }
         private void PopulateClientSelect()
         {
+            // Ajout des valeurs au select des clients
             SelectedClientsIds = Commercial.Clients?.Select(c => c.Id).ToArray();
-            Clients = new SelectList(_context.Client.ToList(), nameof(Client.Id), nameof(Client.Name), SelectedClientsIds);
+            Clients = new SelectList(
+                _context.Client.ToList().OrderBy(c => c.Name), 
+                nameof(Client.Id), 
+                nameof(Client.Name), 
+                SelectedClientsIds
+            );
         }
 
+        // Le commercial qui sera passé à la vue
         [BindProperty]
         public Commercial Commercial { get; set; }
+
+        // La liste des clients du commercial
         [BindProperty]
         public int[] SelectedClientsIds { get; set; }
+
+        // Le département du commercial
         [BindProperty]
         public int? SelectedDepartementId { get; set; }
 
@@ -52,7 +65,9 @@ namespace DashboardManager.Pages.Commercials
                 return NotFound();
             }
 
+            // On recupère le commercial souhaité pour l'affichage en filtrant sur son ID
             Commercial = await _context.Commercial.FirstOrDefaultAsync(c => c.Id == id);
+            // On charge son département et ses clients
             await _context.Departement.ToListAsync();
             await _context.Client.ToListAsync();
 
@@ -61,6 +76,7 @@ namespace DashboardManager.Pages.Commercials
                 return NotFound();
             }
 
+            // On créé les listes pour les listes déroulantes
             PopulateDepartementSelect();
             PopulateClientSelect();
 
@@ -74,12 +90,17 @@ namespace DashboardManager.Pages.Commercials
                 return await OnGetAsync(Commercial.Id);
             }
 
-            await MapSelectedDepartementToCommercial();
-            await MapSelectedClientsToCommercial();
+            // On charge la liste des clients
+            await _context.Client.ToListAsync();
+            // On passe le statut du commercial comme modifié
             _context.Attach(Commercial).State = EntityState.Modified;
 
             try
             {
+                // On lui assigne son nouveau département ainsi que ses clients
+                await MapSelectedDepartementToCommercial();
+                await MapSelectedClientsToCommercial();
+                // On enregistre
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
@@ -108,6 +129,28 @@ namespace DashboardManager.Pages.Commercials
 
         private async Task<bool> MapSelectedClientsToCommercial()
         {
+            // Si le commercial a déjà un ou plusieurs clients
+            if (Commercial.Clients != null && Commercial.Clients?.Count > 0)
+            {
+                // Si des clients ont été sélectionnés
+                if (SelectedClientsIds.Length > 0)
+                {
+                    // Pour chaque client, on va voir si il se trouve dans la liste des clients sélectionnés
+                    // Si ce n'est pas le cas, on le détache du commercial
+                    foreach (Client c in Commercial.Clients.ToList())
+                    {
+                        if (!SelectedClientsIds.Contains(c.Id))
+                        {
+                            Commercial.Clients.Remove(c);
+                        }
+                    }
+                }
+                // Si aucun client n'est sélectionné, alors on les détache tous du commercial
+                else
+                {
+                    Commercial.Clients.Clear();
+                }
+            }
             // Si l'utilisateur à chosit des clients pour ce commercial, on lui les ajoute
             if (SelectedClientsIds.Length > 0)
             {

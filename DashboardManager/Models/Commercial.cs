@@ -20,7 +20,6 @@ namespace DashboardManager.Models
         public string CatchmentArea { get; set; }
 
         // CLIENTS
-        //[Required]
         [Display(Name = "Nb clients")]
         public List<Client> Clients { get; set; }
 

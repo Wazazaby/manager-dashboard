@@ -47,19 +47,34 @@
                 <span asp-validation-for="Commercial.Departement" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Commercial.Clients" class="control-label">Clients</label>
-                <select asp-for="SelectedClientsIds" asp-items="Model.Clients"></select>
+                <label asp-for="Commercial.Clients" class="control-label">Clients</label><br />
+                <select asp-for="SelectedClientsIds" asp-items="Model.Clients" class="p-2 w-100" size="@Model.Clients.Count()"></select>
                 <span asp-validation-for="Commercial.Clients" class="text-danger"></span>
             </div>
+
+            @*@if (Model.Clients?.Count > 0)
+            {
+                <div class="form-group">
+                    <p>Clients</p>
+                    @foreach (SelectListItem x in Model.Clients)
+                    {
+                        <div>
+                            <input type="checkbox" name="SelectedClientsIds" id="@x.Value" value="@x.Value" checked="@(x.Selected ? "checked" : "")"/>
+                            <label for="@x.Value">@x.Text</label>
+                        </div>
+                    }
+                </div>
+            }*@
+
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Sauver" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-page="./Index">Back to List</a>
+    <a asp-page="./Index" class="btn btn-outline-info">Retour</a>
 </div>
 
 @section Scripts {
